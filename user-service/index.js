@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 8082;
 
 app.get('/users', (req, res) => {
-    res.json([{ id: 1, name: 'John Doe' }]);
+    res.json([{ id: 1, name: 'Vinay' }]);
 });
 
 app.listen(port, () => {
