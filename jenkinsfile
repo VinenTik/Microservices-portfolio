@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = 'byteeit-testing-project'
-        SERVICE_NAME = 'portfolio-app'
         REGION = 'us-central1'
     }
     stages {
@@ -14,13 +13,19 @@ pipeline {
         stage('Deploy to Cloud Run') {
             steps {
                 sh '''
-                    gcloud config set project $PROJECT_ID
-                    gcloud run deploy $SERVICE_NAME \
-                        --source . \
-                        --region $REGION \
-                        --allow-unauthenticated
+                    cd auth-service
+                    gcloud run deploy auth-service --source . --region $REGION --allow-unauthenticated
+                '''
+                sh '''
+                    cd ../user-service
+                    gcloud run deploy user-service --source . --region $REGION --allow-unauthenticated
+                '''
+                sh '''
+                    cd ../product-service
+                    gcloud run deploy product-service --source . --region $REGION --allow-unauthenticated
                 '''
             }
         }
     }
 }
+
