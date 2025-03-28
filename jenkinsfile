@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_ID = 'byteeit-testing-project'
+        SERVICE_NAME = 'portfolio-app'
+        REGION = 'us-central1'
+    }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/your-username/portfolio-app.git'
+            }
+        }
+        stage('Deploy to Cloud Run') {
+            steps {
+                sh '''
+                    gcloud config set project $PROJECT_ID
+                    gcloud run deploy $SERVICE_NAME \
+                        --source . \
+                        --region $REGION \
+                        --allow-unauthenticated
+                '''
+            }
+        }
+    }
+}
