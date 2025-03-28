@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-username/portfolio-app.git'
+                git 'https://github.com/VinenTik/Microservices-portfolio.git'
             }
         }
         stage('Deploy to Cloud Run') {
